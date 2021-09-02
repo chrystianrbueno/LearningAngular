@@ -21,5 +21,11 @@ export class PostsService {
     );
   }
 
+  buscarPostPorUserId(id: number): Observable<Post[]>{
+    return this.http.get<Post[]>(`${this.urlBase}/?userId=${id}`).pipe(
+      catchError(tratadorDeError<Post[]>([]))
+  );
+}
+
 
 }
