@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Post } from './posts';
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators'
+import { tratadorDeError } from './tratadores';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,9 @@ export class PostsService {
   constructor(private http: HttpClient) { }
 
   buscarTodosPosts(): Observable<Post[]>  {  
-    return this.http.get<Post[]>(this.urlBase);
+    return this.http.get<Post[]>(this.urlBase).pipe(
+        catchError(tratadorDeError<Post[]>([]))
+    );
   }
 
 
